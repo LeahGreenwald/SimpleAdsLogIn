@@ -1,0 +1,28 @@
+﻿@model HomeViewModel
+@using SimpleAdsLogin.Data
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        @foreach (Ad ad in Model.Ads)
+        {
+        <div class="jumbotron">
+            <h5>Listed by @ad.UserName</h5>
+            <h5>Listed on @ad.Date.ToLongDateString()</h5>
+            <h5>Phone Number: @ad.PhoneNumber</h5>
+            <h3>Details:</h3>
+            <p>@ad.Details</p>
+            @if (Model.IsAuthenticated)
+            {
+                @if (ad.UserId == Model.CurrentUser.Id)
+                {
+                    <form method="post" action="/home/deletead">
+                        <input type="hidden" name="id" value="@ad.Id" />
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                }
+            }
+
+        </div>
+        }
+    </div>
+</div>
